@@ -36,34 +36,34 @@ def parse_args():
 
 
 def read_data(file_path):  
-    # Expression data
-    # Index 0 is gene name, expression data starts at index 1
+    # expression data
+    # index 0 is gene name, expression data starts at index 1
     sp_data = []
     lp_data = []
-    # Column names    
+    # column names    
     sample = []     
     
     with open(file_path, 'r') as csvfile:
         file_reader = csv.reader(csvfile, delimiter= ',', quotechar = '"' )
         first_line = file_reader.__next__()
         
-        # Save column names
+        # save column names
         for n in range(0, len(first_line)):
             if((n % 9 in [4,5,6] and (n not in [4, 15]))):
                 sample.append(first_line[n].split('_')[1])
         
-        # Save data, each line is data from one gene
+        # save data, each line is data from one gene
         for line in file_reader:
-            # Save gene name
+            # save gene name
             sp_data.append([line[-1]])
             lp_data.append([line[-1]])
             for n in range(1, len(line)):
                 
-                # Save SP data for each gene
+                # save SP data for each gene
                 if((n % 9 in [4,5,6]) and (n not in [4, 15])):
                     sp_data[-1].append(float(line[n]))
                 
-                # Save LP data for each gene
+                # save LP data for each gene
                 elif(n % 9 in [7,8,0] and (n not in [7, 18])):
                     lp_data[-1].append(float(line[n]))
 
@@ -77,24 +77,24 @@ def data_log_mean(data, sample):
         # log of expression data
         exp = math.log10(gene[1])
         count = 1
-        # Gene name
+        # gene name
         log_mean.append([gene[0]])
         
         for i in range(2, len(gene)):
-            # If current column has the same genotype as previous column
-            # Sample index starts from 0, 
-            # Gene index starts from 1 for data, index 0 is gene name
+            # if current column has the same genotype as previous column
+            # sample index starts from 0, 
+            # gene index starts from 1 for data, index 0 is gene name
             if(sample[i-2] == sample[i-1]):
                 exp += math.log10(gene[i])
                 count += 1
            
-            # Else, calculate the log mean value of previous genotype
+            # else, calculate the log mean value of previous genotype
             else:
                 log_mean[-1].append(exp / count)
                 count = 1
                 exp = math.log10(gene[i])
                 
-        # Calculate the log mean value of the last genotype
+        # calculate the log mean value of the last genotype
         log_mean[-1].append(exp / count)
         
     return log_mean
@@ -104,7 +104,7 @@ def data_plot(data, name):
     fig, _ = plt.subplots(nrows=2, ncols=2, figsize=(10,10))
     sample = ['wtC', 'wtH', 'gcn2C', 'gcn2H']
     
-    # Histograms
+    # histograms
     for i in range(1, len(data[0])):
         fig.axes[i-1].hist([gene[i] for gene in data], bins='auto')
         title = 'Histogram: ' + name + ' '+sample[i-1]
@@ -127,7 +127,7 @@ def write_data(data, name):
     file.close()
     
     
-# Main flow
+# main flow
 args = parse_args()
 (sample, sp_data, lp_data) = read_data(args.data_file)
 

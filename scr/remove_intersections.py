@@ -40,9 +40,9 @@ def parse_args():
 
 
 def read_data(filename):    
-    # Set of gene names
+    # set of gene names
     gene_set = set()
-    # Dictict key: gene name -> mean expression
+    # dictict key: gene name -> mean expression
     gene_dict = {}
     
     file = io.open(filename)
@@ -69,9 +69,9 @@ def remove_intersections(sp_set, lp_set):
     lp_len = len(lp_set)
     intersection = len(sp_set & lp_set)
     
-    # Remove intersections from sp genes
+    # remove intersections from sp genes
     sp_genes = sp_set - lp_set
-    # Remove intersections from lp genes
+    # remove intersections from lp genes
     lp_genes = lp_set - sp_set
     
     print('Groups\t\tNumber of genes\nSP\t\t%d\nLP\t\t%d\nIntersection\t%d\n'
@@ -80,8 +80,8 @@ def remove_intersections(sp_set, lp_set):
     return (sp_genes, lp_genes)
 
 
-# Helper function for sort_data
-# Output is the index to insert target
+# helper function for sort_data
+# output is the index to insert target
 def binary_insert(values, target):    
     left = 0
     right = len(values)
@@ -96,16 +96,16 @@ def binary_insert(values, target):
     return right
 
 
-# Sort data based on mean expression in descending order
+# sort data based on mean expression in descending order
 def sort_data(gene_set, gene_dict):    
-    # List of gene names sorted by corresponding gene expression
+    # list of gene names sorted by corresponding gene expression
     genes = []
-    # List of gene expression sorted by gene expression
+    # list of gene expression sorted by gene expression
     exp_val = []
     
     for gene in gene_set:
         val = gene_dict[gene]
-        # Find the index to insert based on gene expression
+        # find the index to insert based on gene expression
         index = binary_insert(exp_val, val)
         exp_val.insert(index, val)
         genes.insert(index, gene)
@@ -119,7 +119,7 @@ def write_data(gene_set, gene_dict, name, label):
 
     genes = sort_data(gene_set, gene_dict)
 
-    # Write sorted gene names to file 
+    # write sorted gene names to file 
     for gene in genes:
         if(gene != 'NA'):            
             file.write(gene)            
@@ -128,7 +128,7 @@ def write_data(gene_set, gene_dict, name, label):
     file.close()
     
     
-# Main Flow
+# main Flow
 args = parse_args()
 sp_set, sp_dict = read_data(args.sp_file)
 lp_set, lp_dict = read_data(args.lp_file)

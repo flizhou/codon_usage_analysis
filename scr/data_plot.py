@@ -64,9 +64,9 @@ def data_plot(data_all, data_sel, name, label):
     sample = ['wtC','wtH','gcn2C','gcn2H']
     
     for i in range(1, 5):
-        # Plot complete expression data
+        # plot complete expression data
         fig.axes[i-1].hist([gene[i] for gene in data_all], bins = 'auto')
-        # Plot selected gene expression data
+        # plot selected gene expression data
         fig.axes[i-1].hist([gene[i] for gene in data_sel], 
                             bins = 'auto', color = 'red')
         
@@ -74,10 +74,10 @@ def data_plot(data_all, data_sel, name, label):
         fig.axes[i-1].set_title(title)
         fig.axes[i-1].set_xlabel('log expression')
         fig.axes[i-1].set_ylabel('# of genes')
-        
+
     plt.savefig(f'../results/{name}_{label}.png')           
 
-# Main flow
+# main flow
 args = parse_args()
 data_all = read_data(args.data_files[0])
 data_sel = read_data(args.data_files[1])
