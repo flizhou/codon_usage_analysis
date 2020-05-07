@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Created on Wed Mar 13 16:08:13 2019
 
@@ -8,6 +9,13 @@ Created on Wed Mar 13 16:08:13 2019
 Read gene coding sequence from 'Araport11_genes.201606.txt'
 Find gene sequence for all genes in 'SP_gene_dist.txt' and 'LP_gene_dist.txt'
 Write sequence data into 'SP_seq.txt' and 'LP_seq.txt'
+
+Usage: get_gene_seq.py [-h] [--label LABEL] sp_file lp_file 
+
+Options:
+--label          Define the label of out-put files. Default="top"
+sp_file          Path to the SP data files
+lp_file          Path to the LP data files
 
 """
 
@@ -114,8 +122,8 @@ def get_sequence(gene_bank, genes):
 
 
 def write_data(gene_seq, name, label):
-    filename = name + label + '_seq.txt'
-    file = io.open(filename, 'w')
+
+    file = io.open(f'../results/{name}_{label}_seq.txt', 'w')
     
     for gene in gene_seq:
         # Write gene name to file
@@ -139,9 +147,9 @@ sp_genes = read_data(args.sp_file)
 lp_genes = read_data(args.lp_file)          
 
 sp_gene_seq = get_sequence(gene_bank, sp_genes)             
-write_data(sp_gene_seq, 'SP_', args.label)                
+write_data(sp_gene_seq, 'SP', args.label)                
 
 lp_gene_seq = get_sequence(gene_bank, lp_genes)             
-write_data(lp_gene_seq, 'LP_', args.label)   
+write_data(lp_gene_seq, 'LP', args.label)   
 
                

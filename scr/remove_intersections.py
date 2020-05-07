@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Created on Wed Mar 13 15:31:40 2019
 
@@ -10,7 +11,14 @@ Sort genes based on gene expression in descending order
 Write gene names into 'SP_(label)_genes_no_overlaps.txt' 
 and 'LP_(label)_genes_no_overlaps.txt'
 
+Usage: remove_intersections.py [-h] [--label LABEL] sp_file lp_file 
+
+Options:
+--label          Define the label of out-put files. Default="top"
+sp_file          Path to the SP data files
+lp_file          Path to the LP data files
 """
+
 import io, os, argparse
 
 def parse_args():    
@@ -106,8 +114,8 @@ def sort_data(gene_set, gene_dict):
 
 
 def write_data(gene_set, gene_dict, name, label):         
-    filename = name + label + '_gene_dist.txt'
-    file = io.open(filename, 'w')
+
+    file = io.open(f'../results/{name}_{label}_gene_dist.txt', 'w')
 
     genes = sort_data(gene_set, gene_dict)
 
@@ -127,6 +135,6 @@ lp_set, lp_dict = read_data(args.lp_file)
 
 sp_genes, lp_genes = remove_intersections(sp_set, lp_set)  
   
-write_data(sp_genes, sp_dict, 'SP_', args.label)  
-write_data(lp_genes, lp_dict, 'LP_', args.label) 
+write_data(sp_genes, sp_dict, 'SP', args.label)  
+write_data(lp_genes, lp_dict, 'LP', args.label) 
  

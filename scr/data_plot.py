@@ -1,12 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Created on Sat Mar  2 12:13:59 2019
 
 @author: fanlizhou
 
 Plot selected gene expression data against total expression data
- 
+
+Usage: data_plot.py [-h] [--name NAME] [--label LABEL] data_files [data_files ...] 
+
+Options:
+--name           SP(Default) or LP
+--label          Define the label of out-put files. Default="top"
+data_files       Path to the input data files
+
 """
 
 import io, os, argparse
@@ -66,7 +74,8 @@ def data_plot(data_all, data_sel, name, label):
         fig.axes[i-1].set_title(title)
         fig.axes[i-1].set_xlabel('log expression')
         fig.axes[i-1].set_ylabel('# of genes')
-                
+        
+    plt.savefig(f'../results/{name}_{label}.png')           
 
 # Main flow
 args = parse_args()

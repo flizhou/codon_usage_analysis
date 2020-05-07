@@ -1,14 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Created on Thu Feb 28 13:19:27 2019
 
 @author: fanlizhou
 
-Extract SP and LP data from 'TL_expr_gcrma_filtered_20181128.csv'
-Do log conversion and get mean values for 'wtC','wtH','gcn2C', and 'gcn2H'
-R1_wtC1 and R3_wtH were not included
+Extract SP and LP data from 'TL_expr_gcrma_filtered_20181128.csv'.
+Apply log transformation and get mean values for 'wtC','wtH','gcn2C', 
+and 'gcn2H' R1_wtC1 and R3_wtH were not included
 Write data into 'SP_log_mean.txt' and 'LP_log_mean.txt'
+
+Usage: src/read_data.py data_file 
+
+Options:
+
+data_file  Path to the input data file
 
 """
 import csv, io, os, math, argparse
@@ -38,7 +45,7 @@ def read_data(file_path):
     
     with open(file_path, 'r') as csvfile:
         file_reader = csv.reader(csvfile, delimiter= ',', quotechar = '"' )
-        first_line = file_reader.__next__();
+        first_line = file_reader.__next__()
         
         # Save column names
         for n in range(0, len(first_line)):
@@ -94,20 +101,20 @@ def data_log_mean(data, sample):
 
 
 def data_plot(data, name):   
-    fig, _ = plt.subplots(nrows = 2, ncols = 2, figsize=(10,10))
+    fig, _ = plt.subplots(nrows=2, ncols=2, figsize=(10,10))
     sample = ['wtC', 'wtH', 'gcn2C', 'gcn2H']
     
     # Histograms
     for i in range(1, len(data[0])):
         fig.axes[i-1].hist([gene[i] for gene in data], bins='auto')
-        title = 'Histogram: '+name+' '+sample[i-1]
+        title = 'Histogram: ' + name + ' '+sample[i-1]
         fig.axes[i-1].set_title(title)
         fig.axes[i-1].set_xlabel('log expression')
         fig.axes[i-1].set_ylabel('# of genes')
 
 
 def write_data(data, name):    
-    file = io.open(name + '_log_mean.txt', 'w')
+    file = io.open('../data/clean_data' + name + '_log_mean.txt', 'w')
     
     file.write('{0}{1}\n'.format(name,'_log_mean'))
     

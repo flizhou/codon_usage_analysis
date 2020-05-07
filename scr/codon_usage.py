@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Created on Wed Mar 13 17:34:32 2019
 
@@ -10,6 +11,13 @@ Plot heatmap of amino acid usage and codon usage
 Plot codon usage in each gene for each amino acid. Genes were arranged so that
 the gene expression of SP decrease from 0 to 50 (x-axis) and the gene expression
 of LP increase from 51 to 100 (x-axis)
+
+Usage: codon_usage.py [-h] [--label LABEL] sp_file lp_file 
+
+Options:
+--label          Define the label of out-put files. Default="top"
+sp_file          Path to the SP data files
+lp_file          Path to the LP data files
 
 """
 
@@ -190,7 +198,7 @@ class Codon_Usage:
         return AA_dict  
     
 
-def heatmap_SP_LP(sp_AA_dict, lp_AA_dict):    
+def heatmap_SP_LP(sp_AA_dict, lp_AA_dict, label):    
     # List of Chi-Square test results
     AA_chisquare = []
     # AA plotting annotation information
@@ -276,13 +284,13 @@ def heatmap_SP_LP(sp_AA_dict, lp_AA_dict):
     print('%d out of %d codon show significant usage difference \
           between SP and LP genes (p_value < 0.5)\n' % 
           (count_sig, count_all))
-    plot_heatmap(AA_chisquare, AA_text, 'AAs_ChiSquare')
-    plot_heatmap(codon_ttest, codon_text, 'Codons_ttest')
+    plot_heatmap(AA_chisquare, AA_text, 'AAs_ChiSquare', label)
+    plot_heatmap(codon_ttest, codon_text, 'Codons_ttest', label)
     
     return AAs
 
 
-def plot_heatmap(data, text, cbarlabel):
+def plot_heatmap(data, text, cbarlabel, label):
     
     fig, ax = plt.subplots(nrows = 1, ncols = 1, figsize = (10, 5))
 
@@ -292,7 +300,7 @@ def plot_heatmap(data, text, cbarlabel):
 
     fig.tight_layout()
     plt.show
-        
+    plt.savefig(f'../results/{cbarlabel}_{label}.png')     
     
 def heatmap(data, ax, cmap, cbarlabel):
     
@@ -466,7 +474,7 @@ lp_AA_dict = lp_codon_usage.get_AA_dict()
 
 print("Analyzing SP and LP %s group data\n" % (args.label))
     
-AAs = heatmap_SP_LP(sp_AA_dict, lp_AA_dict)
+AAs = heatmap_SP_LP(sp_AA_dict, lp_AA_dict, args.label)
 plot_SP_LP(sp_AA_dict, lp_AA_dict)
 
 # Optional

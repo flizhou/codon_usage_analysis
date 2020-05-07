@@ -1,15 +1,23 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Created on Thu Feb 28 17:04:55 2019
 
 @author: fanlizhou
 
-read data from 'SP_log_mean.txt' or 'LP_log_mean.txt'
+Read data from 'SP_log_mean.txt' or 'LP_log_mean.txt'
 Use quick partition to find top/bottom (cut_off) genes in
 'wtC','wtH','gcn2C', or 'gcn2H'
 Find genes intersections in 'wtC','wtH','gcn2C', and 'gcn2H'
 Write those gene expression data into 'SP_gene.txt' or 'LP_gene.txt'
+
+Usage: find_genes.py [-h] [--top TOP] [--cut_off CUT_OFF] data_file 
+
+Options:
+--top            Select top genes (1) or bottom genes (0). Default=1
+--cut_off        Define the cut_off to select genes. Default=0.1
+data_file        Path to the input data file
 
 """
 
