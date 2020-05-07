@@ -7,7 +7,7 @@
 # usage: make all
 
 # run all analysis
-all: doc/report.md doc/report.html 
+all: results/SP_top.png results/SP_bot.png results/LP_top.png results/LP_bot.png results/AAs_ChiSquare_bot.png results/Codons_ttest_bot.png results/AAs_ChiSquare_top.png results/Codons_ttest_top.png
 
 # pre-processing/clean data
 data/clean_data/SP_log_mean.txt data/clean_data/LP_log_mean.txt: src/read_data.py data/raw_data/microarray_data.csv
