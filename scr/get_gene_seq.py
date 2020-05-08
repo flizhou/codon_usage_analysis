@@ -39,7 +39,7 @@ def parse_args():
     return args
 
 
-# The Gene_Bank class stores all gene sequences from the input genome
+# the Gene_Bank class stores all gene sequences from the input genome
 class Gene_Bank:
     
     def __init__(self, filename):
@@ -64,35 +64,35 @@ class Gene_Bank:
         count_non_triple = 0
         
         for line in file:
-            # Read a gene inofrmation line
+            # read a gene inofrmation line
             if line[0] == '>':
-                # If has read a gene already, save the gene sequence
+                # if has read a gene already, save the gene sequence
                 if name != '':
-                    # Save chromosome name as 1st bucket key
+                    # save chromosome name as 1st bucket key
                     chrom = name[1 : 5]
-                    # Save gene location // 1000 as 2nd bucket key
+                    # save gene location // 1000 as 2nd bucket key
                     loc = int(name[5 : ]) // 1000
-                    # Save gene sequence
+                    # save gene sequence
                     self.gene_bank[chrom][loc][name[1 : ]].append((gene_info, seq))
                     
                     count_all += 1
                     if len(seq) % 3:
                         count_non_triple += 1
                 
-                # Read the gene information
+                # read the gene information
                 name = line.split()[0].split('.')[0]
                 gene_info = line.strip()
                 seq = ''
             
-            # Read a sequence line
+            # read a sequence line
             else:
                 seq += line.strip()
         
         print('%d genes added\n%d are non-triple\n' %
                           (count_all, count_non_triple))
         
-    # Search a gene by chromsome and location
-    # Return gene sequence     
+    # search a gene by chromsome and location
+    # return gene sequence     
     def search_genes(self, name):
         chrom = name[:4]
         loc = int(name[4:]) // 1000
@@ -101,7 +101,7 @@ class Gene_Bank:
 
 def read_data(filename):
     file = io.open(filename)
-    # Target gene names
+    # target gene names
     genes = []
     
     for line in file:
@@ -112,7 +112,7 @@ def read_data(filename):
     
 
 def get_sequence(gene_bank, genes):
-    # List of gene sequences
+    # list of gene sequences
     gene_seq = []
     
     for gene in genes:
@@ -126,10 +126,10 @@ def write_data(gene_seq, name, label):
     file = io.open(f'../results/{name}_{label}_seq.txt', 'w')
     
     for gene in gene_seq:
-        # Write gene name to file
+        # write gene name to file
         file.write('%s\n' % (gene[0]))
         
-        # Write gene sequence to file, 70 AAs per line
+        # write gene sequence to file, 70 AAs per line
         n = 70
         while n < len(gene[1]):
             file.write('%s\n' % (gene[1][n-70 : n]))
@@ -139,7 +139,7 @@ def write_data(gene_seq, name, label):
     file.close()
   
 
-# Main Flow
+# main flow
 args = parse_args()       
  
 gene_bank = Gene_Bank('Araport11_genes.201606.txt')

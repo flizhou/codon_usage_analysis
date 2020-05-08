@@ -464,7 +464,7 @@ def skellam_plot(mu1, mu2, name):
     plt.show
       
     
-# main Flow
+# main flow
 args = parse_args()
 sp_codon_usage = Codon_Usage(args.sp_file)
 lp_codon_usage = Codon_Usage(args.lp_file)

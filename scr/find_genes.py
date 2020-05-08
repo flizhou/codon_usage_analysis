@@ -44,11 +44,11 @@ def parse_args():
 
 
 def read_data(filename):   
-    # List of expression data lists for each genotype
+    # list of expression data lists for each genotype
     data = [[], [], [], []]
-    # Gene names
+    # gene names
     genes = []
-    # Index for each gene
+    # index for each gene
     index = []
     count = 0
     
@@ -69,8 +69,8 @@ def read_data(filename):
     return (data, genes, index)
 
 
-# Helper function for quick_partition
-# Take a float list and use quick partition to find (gene_num) genes
+# helper function for quick_partition
+# take a float list and use quick partition to find (gene_num) genes
 # with highest/lowest expression
 # data is not changed, only index is modified
 def partition(data, index, start, size, gene_num, top):    
@@ -78,9 +78,9 @@ def partition(data, index, start, size, gene_num, top):
     right = start+size - 1
     pivot = data[index[start]]
     
-    # If top is True, move numbers (>pivot) to the right, 
+    # if top is True, move numbers (>pivot) to the right, 
     # and move numbers (<pivot) to the left
-    # If top is False, move numbers the other way around
+    # if top is False, move numbers the other way around
     while(left < right):
 
         while(left != start + size and 
@@ -100,32 +100,32 @@ def partition(data, index, start, size, gene_num, top):
             left += 1
             right -= 1
             
-    # If top is True, get genes with highest expression levels       
+    # if top is True, get genes with highest expression levels       
     if(top and data[index[right]] < pivot):    
         index[start], index[right] = index[right], index[start]
 
-    # If top is False, get genes with lowest expression levels       
+    # if top is False, get genes with lowest expression levels       
     if (not top and data[index[right]] > pivot):    
         index[start], index[right] = index[right], index[start]
         
-    # Continue sorting left of the pivot if less than (gene_num) genes 
+    # continue sorting left of the pivot if less than (gene_num) genes 
     # are in the right part of the pivot and the current left part is not empty
     if(len(data) - left < gene_num and right > start + 1):
         partition(data, index, start, right - start, gene_num, top)
     
-    # Continue sorting right of the pivot if more than (gene_num) genes 
+    # continue sorting right of the pivot if more than (gene_num) genes 
     # are in the right part of the pivot and the current right part is not empty
     elif(len(data) - left > gene_num and left < start + size - 1):
         partition(data, index, left, start + size - left, gene_num, top)
     
 
 def quick_partition(data, index, cut_off, top):
-    # Total number of genes to save
+    # total number of genes to save
     gene_num = cut_off * len(data)
     
     partition(data, index, 0, len(data), gene_num, top)
     
-    # Target gene indice are save at the right end of index list
+    # target gene indice are save at the right end of index list
     return set(index[len(data) - int(gene_num) : len(data)]) 
          
 
@@ -154,7 +154,7 @@ def write_data(data, genes, gene_index, name, top):
     file.close()
 
   
-# Main flow
+# main flow
 args = parse_args()
 (data, genes, index) = read_data(args.data_file)
 gene_sets = []
