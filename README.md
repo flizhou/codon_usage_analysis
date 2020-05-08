@@ -23,7 +23,7 @@ level. The following genes are analyzed:
 The results are used to guide downstream experiments.
 
 Data and results are not included in this repo. Some sample plots are
-shown in the `results` file.
+shown in the `results` directory.
 
 ## Usage
 

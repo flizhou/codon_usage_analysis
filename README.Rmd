@@ -25,7 +25,7 @@ The purpose of this project is to analyzes codon usage of selected genes based o
 
 The results are used to guide downstream experiments.  
 
-Data and results are not included in this repo. Some sample plots are shown in the `results` file.
+Data and results are not included in this repo. Some sample plots are shown in the `results` directory.
 
 ## Usage
 
